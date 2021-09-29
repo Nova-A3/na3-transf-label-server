@@ -1,7 +1,8 @@
-import { createCanvas } from "canvas";
 import fs from "fs";
 import jsBarcode from "jsbarcode";
 import { jsPDF } from "jspdf";
+// @ts-ignore
+import ncc from "ncc";
 import path from "path";
 import ptp from "pdf-to-printer";
 import qr from "qrcode";
@@ -176,7 +177,8 @@ export class LabelCreator {
   }
 
   async makeQrAsync(data: string): Promise<string> {
-    const qrCanvas = createCanvas(LABEL.QR_SIZE, LABEL.QR_SIZE);
+    const qrCanvas = ncc();
+    qrCanvas.width = qrCanvas.height = LABEL.QR_SIZE;
     await qr.toCanvas(qrCanvas, data, {
       color: {
         light: "#0000", // Transparent background
@@ -189,7 +191,9 @@ export class LabelCreator {
 
   async makeBarcodeAsync(data: string): Promise<string> {
     const height = LABEL.QR_SIZE - 3;
-    const barcodeCanvas = createCanvas(LABEL.BARCODE_WIDTH, height);
+    const barcodeCanvas = ncc();
+    barcodeCanvas.width = LABEL.BARCODE_WIDTH;
+    barcodeCanvas.height = height;
     jsBarcode(barcodeCanvas, data, {
       margin: 0,
       width: LABEL.BARCODE_WIDTH,

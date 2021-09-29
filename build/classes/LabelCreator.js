@@ -60,10 +60,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.label = exports.LabelCreator = void 0;
-var canvas_1 = require("canvas");
 var fs_1 = __importDefault(require("fs"));
 var jsbarcode_1 = __importDefault(require("jsbarcode"));
 var jspdf_1 = require("jspdf");
+// @ts-ignore
+var ncc_1 = __importDefault(require("ncc"));
 var path_1 = __importDefault(require("path"));
 var pdf_to_printer_1 = __importDefault(require("pdf-to-printer"));
 var qrcode_1 = __importDefault(require("qrcode"));
@@ -221,7 +222,8 @@ var LabelCreator = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        qrCanvas = (0, canvas_1.createCanvas)(constants_1.LABEL.QR_SIZE, constants_1.LABEL.QR_SIZE);
+                        qrCanvas = (0, ncc_1.default)();
+                        qrCanvas.width = qrCanvas.height = constants_1.LABEL.QR_SIZE;
                         return [4 /*yield*/, qrcode_1.default.toCanvas(qrCanvas, data, {
                                 color: {
                                     light: "#0000", // Transparent background
@@ -241,7 +243,9 @@ var LabelCreator = /** @class */ (function () {
             var height, barcodeCanvas;
             return __generator(this, function (_a) {
                 height = constants_1.LABEL.QR_SIZE - 3;
-                barcodeCanvas = (0, canvas_1.createCanvas)(constants_1.LABEL.BARCODE_WIDTH, height);
+                barcodeCanvas = (0, ncc_1.default)();
+                barcodeCanvas.width = constants_1.LABEL.BARCODE_WIDTH;
+                barcodeCanvas.height = height;
                 (0, jsbarcode_1.default)(barcodeCanvas, data, {
                     margin: 0,
                     width: constants_1.LABEL.BARCODE_WIDTH,
