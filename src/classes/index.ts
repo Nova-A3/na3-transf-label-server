@@ -1,1 +1,1 @@
-export { label } from "./LabelCreator";
+export { label, LabelCreator } from "./LabelCreator";

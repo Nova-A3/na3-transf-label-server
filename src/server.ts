@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-import { label } from "./classes";
+import { LabelCreator } from "./classes";
 import { isLabelConfig } from "./types";
 
 dotenv.config();
@@ -23,14 +23,7 @@ api.post("/print", async (req, res) => {
     return res.status(400).send("Invalid label config");
   }
 
-  const copies =
-    typeof body.copies === "number" && body.copies >= 1
-      ? Math.floor(body.copies)
-      : 1;
-
-  const l = label(body);
-
-  await l.print({ forceFill: true, copies });
+  await LabelCreator.print(body);
 
   res.status(200).send("OK");
 });

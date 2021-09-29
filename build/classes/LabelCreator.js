@@ -59,7 +59,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.label = void 0;
+exports.label = exports.LabelCreator = void 0;
 var canvas_1 = require("canvas");
 var fs_1 = __importDefault(require("fs"));
 var jsbarcode_1 = __importDefault(require("jsbarcode"));
@@ -87,14 +87,28 @@ var LabelCreator = /** @class */ (function () {
     }
     LabelCreator.print = function (label) {
         return __awaiter(this, void 0, void 0, function () {
-            var l, copies, customerName, date, productCode, productName, productQuantity, productUnitAbbreviation, batchId, qrData;
+            var l, copies, customerName, date, productCode, productName, productQuantity, productUnitAbbreviation, batchId, qrData, filePath;
             return __generator(this, function (_a) {
-                l = new LabelCreator(label);
-                copies = label.copies, customerName = label.customerName, date = label.date, productCode = label.productCode, productName = label.productName, productQuantity = label.productQuantity, productUnitAbbreviation = label.productUnitAbbreviation, batchId = label.batchId, qrData = label.qrData;
-                __spreadArray([], Array(copies), true).forEach(function (_, i) {
-                    l.fillText(customerName, 49.5, 10.7, { maxWidth: 70, maxLines: 1 });
-                });
-                return [2 /*return*/];
+                switch (_a.label) {
+                    case 0:
+                        l = new LabelCreator(label);
+                        copies = label.copies, customerName = label.customerName, date = label.date, productCode = label.productCode, productName = label.productName, productQuantity = label.productQuantity, productUnitAbbreviation = label.productUnitAbbreviation, batchId = label.batchId, qrData = label.qrData;
+                        __spreadArray([], Array(copies), true).forEach(function (_, i) {
+                            l.fillText(customerName, 30, 10, { maxWidth: 70, maxLines: 1 });
+                            if (i !== copies - 1) {
+                                l.pdf.doc.addPage();
+                            }
+                        });
+                        filePath = ".label-" + batchId + "-" + (0, uniqid_1.default)() + ".pdf";
+                        l.pdf.doc.save(filePath);
+                        return [4 /*yield*/, pdf_to_printer_1.default.print(filePath, {
+                                unix: ["-o landscape", "-o ColorModel=Gray"],
+                            })];
+                    case 1:
+                        _a.sent();
+                        fs_1.default.unlinkSync(filePath);
+                        return [2 /*return*/];
+                }
             });
         });
     };
@@ -254,6 +268,7 @@ var LabelCreator = /** @class */ (function () {
     };
     return LabelCreator;
 }());
+exports.LabelCreator = LabelCreator;
 var label = function (config) { return new LabelCreator(config); };
 exports.label = label;
 exports.default = exports.label;

@@ -18,8 +18,8 @@ import type {
 
 const ROOT_DIR = path.resolve(__dirname, "../..");
 
-class LabelCreator {
-  private pdf: {
+export class LabelCreator {
+  pdf: {
     readonly doc: jsPDF;
     ready: boolean;
   } = {
@@ -53,8 +53,22 @@ class LabelCreator {
     } = label;
 
     [...Array(copies)].forEach((_, i) => {
-      l.fillText(customerName, 49.5, 10.7, { maxWidth: 70, maxLines: 1 });
+      l.fillText(customerName, 30, 10, { maxWidth: 70, maxLines: 1 });
+
+      if (i !== copies - 1) {
+        l.pdf.doc.addPage();
+      }
     });
+
+    const filePath = `.label-${batchId}-${uniqid()}.pdf`;
+
+    l.pdf.doc.save(filePath);
+
+    await ptp.print(filePath, {
+      unix: ["-o landscape", "-o ColorModel=Gray"],
+    });
+
+    fs.unlinkSync(filePath);
   }
 
   async fillTest(options?: LabelFillOptions) {

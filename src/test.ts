@@ -11,18 +11,17 @@ import { label } from "./classes";
 
 (async () => {
   const l = label({
-    client: "Dart do Brasil Ind. e Comércio LTDA.",
+    customerName: "Dart do Brasil Ind. e Comércio LTDA.",
     date: "02/09/2021",
-    productId: "S-0043227",
-    productCode: "5001190010",
+    productCode: "S-0043227",
     productName:
       "Produto com um nome muito, muito grande mesmo, capaz de ocupar até quatro linhas",
     productQuantity: 6000,
-    productUnit: "sacos",
+    productUnitAbbreviation: "SACOS",
+    productUnitName: "SACOS",
     batchId: "KA02-154-21219C",
     qrData: "test",
     barcodeData: "test",
+    copies: 10,
   });
-  await l.fill({ copies: 10 });
-  l.download();
 })();

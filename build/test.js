@@ -47,25 +47,19 @@ var classes_1 = require("./classes");
 (function () { return __awaiter(void 0, void 0, void 0, function () {
     var l;
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                l = (0, classes_1.label)({
-                    client: "Dart do Brasil Ind. e Comércio LTDA.",
-                    date: "02/09/2021",
-                    productId: "S-0043227",
-                    productCode: "5001190010",
-                    productName: "Produto com um nome muito, muito grande mesmo, capaz de ocupar até quatro linhas",
-                    productQuantity: 6000,
-                    productUnit: "sacos",
-                    batchId: "KA02-154-21219C",
-                    qrData: "test",
-                    barcodeData: "test",
-                });
-                return [4 /*yield*/, l.fill({ copies: 10 })];
-            case 1:
-                _a.sent();
-                l.download();
-                return [2 /*return*/];
-        }
+        l = (0, classes_1.label)({
+            customerName: "Dart do Brasil Ind. e Comércio LTDA.",
+            date: "02/09/2021",
+            productCode: "S-0043227",
+            productName: "Produto com um nome muito, muito grande mesmo, capaz de ocupar até quatro linhas",
+            productQuantity: 6000,
+            productUnitAbbreviation: "SACOS",
+            productUnitName: "SACOS",
+            batchId: "KA02-154-21219C",
+            qrData: "test",
+            barcodeData: "test",
+            copies: 10,
+        });
+        return [2 /*return*/];
     });
 }); })();

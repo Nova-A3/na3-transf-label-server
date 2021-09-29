@@ -54,7 +54,7 @@ api.use((0, helmet_1.default)());
 api.use((0, morgan_1.default)("dev"));
 api.use((0, body_parser_1.json)());
 api.post("/print", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var body, copies, l;
+    var body;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -62,11 +62,7 @@ api.post("/print", function (req, res) { return __awaiter(void 0, void 0, void 0
                 if (!(0, types_1.isLabelConfig)(body)) {
                     return [2 /*return*/, res.status(400).send("Invalid label config")];
                 }
-                copies = typeof body.copies === "number" && body.copies >= 1
-                    ? Math.floor(body.copies)
-                    : 1;
-                l = (0, classes_1.label)(body);
-                return [4 /*yield*/, l.print({ forceFill: true, copies: copies })];
+                return [4 /*yield*/, classes_1.LabelCreator.print(body)];
             case 1:
                 _a.sent();
                 res.status(200).send("OK");
